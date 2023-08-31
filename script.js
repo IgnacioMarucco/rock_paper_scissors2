@@ -1,5 +1,38 @@
 "use strict";
 
+function game() {
+  let computerScore = 0;
+  let playerScore = 0;
+  let ties = 0;
+
+  for (let i = 0; i < 5 ; i++) {
+    let roundResult = playRound(getComputerChoice(), getPlayerChoice());
+
+    if (roundResult) {
+      playerScore++;
+    } else if (roundResult === null) {
+      ties++;
+    } else {
+      computerScore++;
+    }
+
+    console.log(`Computer Score = ${computerScore} Player Score = ${playerScore} Ties = ${ties}`);
+  }
+  return getFinalWinner(computerScore, playerScore);
+}
+
+function playRound(computerChoice, playerChoice) {
+  if (computerChoice === playerChoice) {
+    return null;
+  } else if ((computerChoice === 'rock' && playerChoice === 'paper') || 
+            (computerChoice === 'paper' && playerChoice === 'scissors') || 
+            (computerChoice === 'scissors' && playerChoice === 'rock')) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
 function getComputerChoice() {
   let randomNumber = Math.floor(Math.random() * 3);
 
@@ -17,40 +50,6 @@ function getPlayerChoice() {
   return prompt('Rock, Paper or scissors?', 'rock').toLowerCase();
 }
 
-function playRound(computerChoice, playerChoice) {
-
-  if (computerChoice === playerChoice) {
-    return 'Draw.';
-  } else if ((computerChoice === 'rock' && playerChoice === 'paper') || 
-            (computerChoice === 'paper' && playerChoice === 'scissors') || 
-            (computerChoice === 'scissors' && playerChoice === 'rock')) {
-      return 'You win!';
-  } else {
-      return 'You lose.';
-  }
-}
-
-function game() {
-  let computerScore = 0;
-  let playerScore = 0;
-  let ties = 0;
-
-  for (let i = 0; i < 5 ; i++) {
-    let roundResult = playRound(getComputerChoice(), getPlayerChoice());
-
-    if (roundResult === 'You lose.') {
-      computerScore++;
-    } else if (roundResult === 'You win!') {
-      playerScore++;
-    } else {
-      ties++;
-    }
-
-    console.log(`Computer Score = ${computerScore} Player Score = ${playerScore} Ties = ${ties}`);
-  }
-  return getFinalWinner(computerScore, playerScore);
-}
-
 function getFinalWinner(computerScore, playerScore) {
   if (computerScore > playerScore) {
     console.log('You lost the game. Try again!');
@@ -61,4 +60,4 @@ function getFinalWinner(computerScore, playerScore) {
   }
 }
 
-game()
+game();
